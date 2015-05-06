@@ -48,7 +48,7 @@ public class UrlPartitioner {
         while((line = br.readLine())!=null){
             tmp = line.split(" ");
             domain = Integer.parseInt(tmp[0]);
-            edge = tmp[1]+" "+tmp[1];
+            edge = tmp[1]+" "+tmp[2];
             if(old_domain == domain){
                 fw.write(edge+"\n");
                 dim++;
