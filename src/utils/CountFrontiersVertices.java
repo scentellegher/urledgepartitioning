@@ -4,6 +4,8 @@
  */
 package utils;
 
+import gnu.trove.map.hash.THashMap;
+import gnu.trove.set.hash.THashSet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,13 +37,13 @@ public class CountFrontiersVertices {
         String [] tmp;
         int v1, v2;
         //create a set for each partition
-        Set<Integer> [] V = new HashSet[K];
+        Set<Integer> [] V = new THashSet[K];
         //for each partition
         for (File file : list) {
             if (file.isFile()) {
                 //open file
                 br= new BufferedReader(new FileReader(file.getAbsolutePath()));
-                V[i]= new HashSet();
+                V[i]= new THashSet();
                 System.out.println(file.getName());
                 //extract the set of vertices in the partition
                 while((line = br.readLine())!=null){
@@ -57,8 +59,9 @@ public class CountFrontiersVertices {
             }
         }
         
+        System.out.println("Start map for frontiers");
         // map for the frontiers
-        Map<Integer,Integer> m = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> m = new THashMap<Integer,Integer>();
         //for each set of vertices
         for(int k=0; k<K; k++){
             //add <v_id, count>
@@ -68,9 +71,12 @@ public class CountFrontiersVertices {
                 }else{
                     m.put(v, 1);
                 }
+                if(m.size()%1000000==0)
+                    System.out.println("size="+m.size());
             }
         }
         
+        System.out.println("Find intersection");
         int count =0;
         //extract the size of the intersection
         for (Map.Entry<Integer, Integer> entry : m.entrySet()) {
