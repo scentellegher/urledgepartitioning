@@ -9,38 +9,57 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
  * @author cent
  */
-public class RRPartitioner {
+public class Random1DPartitioner {
     
     public static void main(String[] args) throws IOException {
         // params: inputfile outputpath partitions
         String input = args[0];
         String outpath = args[1];
         int K = Integer.parseInt(args[2]);
+        
         FileWriter [] files = new FileWriter[K];
         String name = "part_";
         for(int i=0; i<K; i++){
             files[i]= new FileWriter(new File(outpath + name + i));
         }
         
-        BufferedReader br = new BufferedReader(new FileReader(input));
         String line;
-        String [] tmp;
-        int i = 0;
+        Integer vertex;
+        String[] tmp;
+        String edge;
+        int old_vertex=0;
+        int dim = 0;
+        
+        Random rand = new Random();
+        int i=rand.nextInt(K);
+        
+        BufferedReader br = new BufferedReader(new FileReader(input));
         while((line = br.readLine())!=null){
-            tmp = line.split(" "); // domain v1 v2
-            files[i%K].write(tmp[1]+" "+tmp[2]+"\n");
-            i++;
+            tmp = line.split(" ");
+            vertex = Integer.parseInt(tmp[1]);
+            edge = tmp[1]+" "+tmp[2];
+            if(old_vertex == vertex){
+                files[i].write(edge+"\n");
+                dim++;
+            } else {
+                i=rand.nextInt(K);
+                files[i].write(edge+"\n");
+                old_vertex = vertex;
+                dim = 1;
+            }
         }
+        br.close();
         
         for(int j=0; j<K; j++){
             files[j].close();
         }
-        br.close();
+
     }   
     
 }

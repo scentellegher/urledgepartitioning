@@ -78,13 +78,18 @@ public class CountFrontiersVertices {
         
         System.out.println("Find intersection");
         int count =0;
+        int countReplica= 0;
         //extract the size of the intersection
         for (Map.Entry<Integer, Integer> entry : m.entrySet()) {
+            countReplica+=entry.getValue();
             //if the count of a vertex is > 1 it means that the vertex is a frontier 
             if(entry.getValue()>1)
                 count++;
+            
         }
         System.out.println("frontier vertices= "+count);
+        System.out.println("countReplica="+countReplica+" |V|="+m.size());
+        System.out.println("number of replicas per node= "+ (double) countReplica / m.size());
     }
     
 }
