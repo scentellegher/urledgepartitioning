@@ -34,8 +34,8 @@ public class Random1DPartitioner {
         String[] tmp;
         String edge;
         int old_vertex=0;
-        int dim = 0;
         
+        //select random partition
         Random rand = new Random();
         int i=rand.nextInt(K);
         
@@ -44,14 +44,14 @@ public class Random1DPartitioner {
             tmp = line.split(" ");
             vertex = Integer.parseInt(tmp[1]);
             edge = tmp[1]+" "+tmp[2];
+            // if the vertex is the same write in the current partition 
             if(old_vertex == vertex){
                 files[i].write(edge+"\n");
-                dim++;
             } else {
+                //change partition and store edge
                 i=rand.nextInt(K);
                 files[i].write(edge+"\n");
                 old_vertex = vertex;
-                dim = 1;
             }
         }
         br.close();
