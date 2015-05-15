@@ -26,7 +26,7 @@ public class UrlPartitioner {
 
     public static void main(String[] args) throws IOException {
         long start, end;
-        DateFormat df = new SimpleDateFormat("mm:ss");
+        DateFormat df = new SimpleDateFormat("mm:ss:SSS");
         
         // params: inputfile outputpath partitions
         String input = args[0];
@@ -105,7 +105,7 @@ public class UrlPartitioner {
         }       
         
         System.out.println("size="+dom2part.size());
-        System.out.println("End domain sorting...");
+        System.out.println("End greedy assignment...");
         end = System.currentTimeMillis();
         System.out.println("time:"+ df.format(new Date(end - start)));
         System.out.println("------------------------");
