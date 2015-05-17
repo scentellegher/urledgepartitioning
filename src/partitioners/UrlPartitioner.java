@@ -57,6 +57,7 @@ public class UrlPartitioner {
         while((line = br.readLine())!=null){
             tmp = line.split(" ");
             domain = Integer.parseInt(tmp[0]);
+            
             if(old_domain == domain){
                 dim++;
             } else {
@@ -73,6 +74,8 @@ public class UrlPartitioner {
         System.out.println("Number of domains: "+map.size());
         System.out.println("------------------------");
         br.close();
+        
+        domainStat(map);
         
         //sort domains in descending order by values (number of edges)
         System.out.println("Start domain sorting...");
@@ -147,6 +150,38 @@ public class UrlPartitioner {
             }
         }
         return min;
+    }
+    
+    public static void domainStat(Map<Integer,Integer> map){
+        //domain stat |V|=1 | 10 | 100 | 1000 | 10000 | 100000
+        Map<Integer, Integer> stat = new HashMap<Integer, Integer>();
+        int value;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            value = getBucket(entry.getValue()); //domain size
+            if(!stat.containsKey(value)){
+                stat.put(value, 1);
+            }else{
+                stat.put(value, stat.get(value)+1);
+            }
+        }
+        
+        int tot=0;
+        for (Map.Entry<Integer, Integer> entry : stat.entrySet()) {
+            tot += entry.getValue();
+            System.out.println(entry.getKey()+" "+entry.getValue());
+        }
+        System.out.println("tot domains: "+tot);
+    }
+    
+    public static int getBucket(int num){
+        int bucket = 1;
+        if(num==1)
+            return 1;
+        while(num != 0){
+            num = num/10;
+            bucket = bucket*10;
+        }
+        return bucket;
     }
     
 }
