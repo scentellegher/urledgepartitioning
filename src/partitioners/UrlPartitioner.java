@@ -153,7 +153,7 @@ public class UrlPartitioner {
     }
     
     public static void domainStat(Map<Integer,Integer> map){
-        //domain stat |V|=1 | 10 | 100 | 1000 | 10000 | 100000
+        //domain stat |E|=1 | 10 | 100 | 1000 | 10000 | 100000
         Map<Integer, Integer> stat = new HashMap<Integer, Integer>();
         int value;
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
@@ -168,7 +168,7 @@ public class UrlPartitioner {
         int tot=0;
         for (Map.Entry<Integer, Integer> entry : stat.entrySet()) {
             tot += entry.getValue();
-            System.out.println(entry.getKey()+" "+entry.getValue());
+            System.out.println("|E|="+entry.getKey()+" -> "+entry.getValue());
         }
         System.out.println("tot domains: "+tot);
     }
